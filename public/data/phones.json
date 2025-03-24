@@ -1,0 +1,190 @@
+{
+  "categories": [
+    {
+      "id": "emergency",
+      "name": "เหตุด่วนเหตุร้าย",
+      "icon": "FiAlertTriangle",
+      "color": "bg-red-600",
+      "items": [
+        {
+          "name": "เหตุด่วนเหตุร้าย",
+          "phone": "191",
+          "description": "แจ้งเหตุด่วนเหตุร้าย เช่น อาชญากรรม โจรกรรม",
+          "openHours": "24 ชั่วโมง",
+          "location": "สำนักงานตำรวจแห่งชาติ",
+          "website": "https://www.royalthaipolice.go.th/"
+        },
+        {
+          "name": "กู้ภัย/ดับเพลิง",
+          "phone": "199",
+          "description": "แจ้งเหตุเพลิงไหม้ อุบัติเหตุฉุกเฉิน กู้ภัยต่างๆ",
+          "openHours": "24 ชั่วโมง",
+          "line": "@rescue199"
+        },
+        {
+          "name": "แจ้งอุบัติเหตุทางถนน",
+          "phone": "1193",
+          "description": "แจ้งอุบัติเหตุทางถนน ตำรวจทางหลวง",
+          "openHours": "24 ชั่วโมง"
+        },
+        {
+          "name": "หน่วยแพทย์ฉุกเฉิน (EMS)",
+          "phone": "1669",
+          "description": "บริการแพทย์ฉุกเฉิน รถพยาบาลฉุกเฉิน",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.niems.go.th/"
+        }
+      ]
+    },
+    {
+      "id": "government",
+      "name": "หน่วยงานราชการ",
+      "icon": "FiLayers",
+      "color": "bg-blue-600",
+      "items": [
+        {
+          "name": "ศูนย์ดำรงธรรม",
+          "phone": "1567",
+          "description": "ศูนย์รับเรื่องร้องเรียน/ร้องทุกข์ แก้ไขปัญหาความเดือดร้อน",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.damrongdhama.moi.go.th/"
+        },
+        {
+          "name": "สายด่วนกรมที่ดิน",
+          "phone": "1558",
+          "description": "สอบถามข้อมูลเกี่ยวกับที่ดิน โฉนด การจดทะเบียน",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)"
+        },
+        {
+          "name": "สายด่วนกรมสรรพากร",
+          "phone": "1161",
+          "description": "สอบถามข้อมูลเกี่ยวกับภาษี การยื่นภาษี",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.rd.go.th/"
+        },
+        {
+          "name": "กรมการปกครอง",
+          "phone": "1548",
+          "description": "ข้อมูลบัตรประชาชน ทะเบียนราษฎร์",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)"
+        }
+      ]
+    },
+    {
+      "id": "utility",
+      "name": "สาธารณูปโภค",
+      "icon": "FiZap",
+      "color": "bg-yellow-500",
+      "items": [
+        {
+          "name": "การไฟฟ้านครหลวง (กฟน.)",
+          "phone": "1130",
+          "description": "แจ้งไฟฟ้าขัดข้อง ไฟฟ้าดับ (เขตกรุงเทพฯ)",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.mea.or.th/",
+          "line": "@mea"
+        },
+        {
+          "name": "การไฟฟ้าส่วนภูมิภาค (กฟภ.)",
+          "phone": "1129",
+          "description": "แจ้งไฟฟ้าขัดข้อง ไฟฟ้าดับ (ต่างจังหวัด)",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.pea.co.th/"
+        },
+        {
+          "name": "การประปานครหลวง (กปน.)",
+          "phone": "1125",
+          "description": "แจ้งท่อประปาแตก น้ำไม่ไหล (เขตกรุงเทพฯ)",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.mwa.co.th/"
+        },
+        {
+          "name": "การประปาส่วนภูมิภาค (กปภ.)",
+          "phone": "1662",
+          "description": "แจ้งท่อประปาแตก น้ำไม่ไหล (ต่างจังหวัด)",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.pwa.co.th/"
+        }
+      ]
+    },
+    {
+      "id": "transportation",
+      "name": "หน่วยงานขนส่ง",
+      "icon": "FiTruck",
+      "color": "bg-green-600",
+      "items": [
+        {
+          "name": "ขสมก. (รถเมล์)",
+          "phone": "1348",
+          "description": "สอบถามเส้นทางรถเมล์ ร้องเรียนรถเมล์ กทม.",
+          "openHours": "06:00 - 22:00 น.",
+          "website": "https://www.bmta.co.th/"
+        },
+        {
+          "name": "การรถไฟแห่งประเทศไทย",
+          "phone": "1690",
+          "description": "สอบถามตารางเวลา จองตั๋วรถไฟ",
+          "openHours": "08:00 - 20:00 น.",
+          "website": "https://www.railway.co.th/"
+        },
+        {
+          "name": "รถไฟฟ้า MRT",
+          "phone": "0-2624-5200",
+          "description": "สอบถามข้อมูลรถไฟฟ้าใต้ดิน",
+          "openHours": "06:00 - 24:00 น.",
+          "website": "https://www.mrta.co.th/"
+        },
+        {
+          "name": "รถไฟฟ้า BTS",
+          "phone": "02-617-6000",
+          "description": "สอบถามข้อมูลรถไฟฟ้า BTS",
+          "openHours": "06:00 - 24:00 น.",
+          "website": "https://www.bts.co.th/"
+        },
+        {
+          "name": "ท่าอากาศยานสุวรรณภูมิ",
+          "phone": "1722",
+          "description": "สอบถามข้อมูลเที่ยวบิน สนามบินสุวรรณภูมิ",
+          "openHours": "24 ชั่วโมง",
+          "website": "https://www.suvarnabhumiairport.com/"
+        }
+      ]
+    },
+    {
+      "id": "complaint",
+      "name": "ช่องทางร้องเรียน/ร้องทุกข์",
+      "icon": "FiMessageCircle",
+      "color": "bg-purple-600",
+      "items": [
+        {
+          "name": "ศูนย์ดำรงธรรม",
+          "phone": "1567",
+          "description": "ร้องเรียนปัญหาความเดือดร้อนทั่วไป",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.damrongdhama.moi.go.th/"
+        },
+        {
+          "name": "สายด่วน ปปช.",
+          "phone": "1205",
+          "description": "แจ้งเบาะแสการทุจริต คอร์รัปชัน",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.nacc.go.th/"
+        },
+        {
+          "name": "คุ้มครองผู้บริโภค (สคบ.)",
+          "phone": "1166",
+          "description": "ร้องเรียนสินค้าและบริการ คุ้มครองผู้บริโภค",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.ocpb.go.th/"
+        },
+        {
+          "name": "กรมการท่องเที่ยว",
+          "phone": "1155",
+          "description": "ช่วยเหลือนักท่องเที่ยว ร้องเรียนปัญหาการท่องเที่ยว",
+          "openHours": "08:30 - 16:30 น. (จันทร์-ศุกร์)",
+          "website": "https://www.dot.go.th/"
+        }
+      ]
+    }
+  ]
+}
