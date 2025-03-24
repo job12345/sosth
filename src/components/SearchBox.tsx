@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import PhoneCard from './PhoneCard';
@@ -81,10 +83,13 @@ const SearchBox = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
+          aria-label="ค้นหาเบอร์โทร หรือชื่อหน่วยงาน"
         />
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700"
           onClick={handleSearch}
+          title="ค้นหา"
+          aria-label="ค้นหา"
         >
           <FiSearch className="text-xl" />
         </button>

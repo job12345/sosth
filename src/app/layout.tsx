@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import CookieConsent from "@/components/CookieConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,8 +20,38 @@ export const metadata: Metadata = {
   themeColor: "#1e3a8a",
   icons: {
     icon: "/icons/icon-192x192.png",
-    apple: "/icons/icon-192x192.png",
-  }
+    apple: [
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" }
+    ],
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  openGraph: {
+    title: "SOSTH - เบอร์โทรฉุกเฉิน",
+    description: "แหล่งรวมเบอร์โทรฉุกเฉินและหน่วยงานสำคัญในประเทศไทย",
+    url: "https://sosth.com",
+    siteName: "SOSTH",
+    locale: "th_TH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SOSTH - เบอร์โทรฉุกเฉิน",
+    description: "แหล่งรวมเบอร์โทรฉุกเฉินและหน่วยงานสำคัญในประเทศไทย",
+  },
+  appleWebApp: {
+    title: "SOSTH",
+    statusBarStyle: "black-translucent",
+    capable: true,
+    startupImage: [
+      "/icons/icon-512x512.png"
+    ]
+  },
 };
 
 export default function RootLayout({
@@ -30,15 +61,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
         {children}
+        <CookieConsent />
       </body>
     </html>
   );
