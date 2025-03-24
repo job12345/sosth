@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { FiEdit2, FiTrash2, FiSave, FiPlusCircle, FiX } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiSave, FiPlusCircle, FiX, FiSettings, FiActivity } from 'react-icons/fi';
 
 type PhoneItem = {
   name: string;
@@ -133,7 +134,6 @@ export default function AdminDashboardPage() {
   };
 
   const handleDeleteItem = async (categoryId: string, index: number) => {
-    if (!confirm('คุณแน่ใจหรือไม่ที่จะลบข้อมูลนี้?')) return;
 
     const newCategories = categories.map(category => {
       if (category.id === categoryId) {
@@ -185,6 +185,22 @@ export default function AdminDashboardPage() {
           >
             ออกจากระบบ
           </button>
+        </div>
+
+        {/* เมนูการจัดการ */}
+        <div className="mb-6 bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-lg font-semibold mb-3 text-blue-800">เมนูการจัดการ</h2>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/admin/dashboard" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center">
+              <FiActivity className="mr-2" /> จัดการเบอร์โทรศัพท์
+            </Link>
+            <Link href="/admin/seo" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 flex items-center">
+              <FiSettings className="mr-2" /> จัดการ SEO
+            </Link>
+            <Link href="/admin/ads" className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 flex items-center">
+              <FiSettings className="mr-2" /> จัดการโฆษณา
+            </Link>
+          </div>
         </div>
 
         {isLoading ? (
