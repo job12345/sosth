@@ -66,23 +66,25 @@ export default function AdminDashboardPage() {
   const handleSaveData = async (newData: any) => {
     setIsSaving(true);
     try {
+      const token = localStorage.getItem('sosth_admin');
       const response = await fetch('/api/phones', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-auth': 'masterjob'
+          'x-admin-auth': token || 'masterjob'
         },
-        body: JSON.stringify({ categories: newData })
+        body: JSON.stringify(newData)
       });
 
       if (!response.ok) {
-        throw new Error('ไม่สามารถบันทึกข้อมูลได้');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'ไม่สามารถบันทึกข้อมูลได้');
       }
 
       await fetchData(); // โหลดข้อมูลใหม่หลังจากบันทึก
-    } catch (error) {
+    } catch (error: any) {
       console.error('เกิดข้อผิดพลาดในการบันทึกข้อมูล:', error);
-      alert('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
+      alert(error.message || 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง');
     } finally {
       setIsSaving(false);
     }

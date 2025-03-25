@@ -1,52 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
-import kv from '@vercel/kv';
 
 const DATA_FILE_PATH = path.join(process.cwd(), 'public/data/phones.json');
-const KV_KEY = 'sosth_phone_data';
 
 // ตรวจสอบว่าเป็น admin หรือไม่
 async function isAdmin(req: NextRequest) {
-  const isAdmin = req.headers.get('x-admin-auth');
-  return isAdmin === 'masterjob';
+  const authToken = req.headers.get('x-admin-auth');
+  return authToken === process.env.ADMIN_TOKEN || authToken === 'masterjob';
 }
 
-// อ่านข้อมูลจากไฟล์หรือ KV
+// อ่านข้อมูลจากไฟล์
 async function readData() {
-  // ถ้าอยู่ใน production ให้อ่านจาก KV
-  if (process.env.NODE_ENV === 'production') {
-    try {
-      const data = await kv.get(KV_KEY);
-      // ถ้ายังไม่มีข้อมูลใน KV ให้ดึงจากไฟล์แล้วบันทึกเข้า KV
-      if (!data) {
-        const fileData = await fs.readFile(DATA_FILE_PATH, 'utf-8');
-        const parsedData = JSON.parse(fileData);
-        await kv.set(KV_KEY, parsedData);
-        return parsedData;
-      }
-      return data;
-    } catch (error) {
-      console.error('KV error:', error);
-      // Fallback to file if KV fails
-      const data = await fs.readFile(DATA_FILE_PATH, 'utf-8');
-      return JSON.parse(data);
-    }
-  } else {
-    // ใน development ให้อ่านจากไฟล์
+  try {
     const data = await fs.readFile(DATA_FILE_PATH, 'utf-8');
     return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading data:', error);
+    throw new Error('ไม่สามารถอ่านข้อมูลได้');
   }
 }
 
-// บันทึกข้อมูล
+// บันทึกข้อมูลลงไฟล์
 async function writeData(data: any) {
-  if (process.env.NODE_ENV === 'production') {
-    // ใน production ให้บันทึกลง KV
-    await kv.set(KV_KEY, data);
-  } else {
-    // ใน development ให้บันทึกลงไฟล์
-    await fs.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  try {
+    // ตรวจสอบโครงสร้างข้อมูล
+    if (!Array.isArray(data)) {
+      throw new Error('ข้อมูลต้องอยู่ในรูปแบบ array');
+    }
+    
+    // สร้างข้อมูลในรูปแบบที่ถูกต้อง
+    const formattedData = {
+      categories: data
+    };
+    
+    await fs.writeFile(
+      DATA_FILE_PATH, 
+      JSON.stringify(formattedData, null, 2),
+      'utf-8'
+    );
+  } catch (error) {
+    console.error('Error writing data:', error);
+    throw new Error('ไม่สามารถบันทึกข้อมูลได้');
   }
 }
 
@@ -57,23 +52,42 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     console.error('GET error:', error);
-    return NextResponse.json({ error: 'ไม่สามารถอ่านข้อมูลได้' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'ไม่สามารถอ่านข้อมูลได้' },
+      { status: 500 }
+    );
   }
 }
 
 // PUT /api/phones
 export async function PUT(req: NextRequest) {
   try {
+    // ตรวจสอบสิทธิ์
     if (!await isAdmin(req)) {
-      return NextResponse.json({ error: 'ไม่มีสิทธิ์เข้าถึง' }, { status: 403 });
+      return NextResponse.json(
+        { error: 'ไม่มีสิทธิ์เข้าถึง' },
+        { status: 403 }
+      );
     }
 
+    // รับและตรวจสอบข้อมูล
     const body = await req.json();
+    if (!body || !Array.isArray(body)) {
+      return NextResponse.json(
+        { error: 'ข้อมูลไม่ถูกต้อง' },
+        { status: 400 }
+      );
+    }
+
+    // บันทึกข้อมูล
     await writeData(body);
     
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error('PUT error:', error);
-    return NextResponse.json({ error: 'ไม่สามารถบันทึกข้อมูลได้' }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || 'ไม่สามารถบันทึกข้อมูลได้' },
+      { status: 500 }
+    );
   }
 }
