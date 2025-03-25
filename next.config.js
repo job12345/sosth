@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development'
-});
+const nextConfig = {
+  // Cloudflare Workers specific settings
+  output: 'standalone',
+  experimental: {
+    isrMemoryCacheSize: 0, // Disable ISR cache for Cloudflare Workers
+  }
+};
 
-const nextConfig = {};
-
-module.exports = withPWA(nextConfig);
+module.exports = nextConfig;

@@ -1,0 +1,13 @@
+name = "sosth"
+main = "src/worker.ts"
+compatibility_date = "2024-03-25"
+
+[site]
+bucket = "./.next/static"
+
+[build]
+command = "npm run build"
+dist = "./.next"
+
+[env.production]
+workers_dev = true
