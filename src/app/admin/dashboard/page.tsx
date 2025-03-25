@@ -29,21 +29,24 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [editingItem, setEditingItem] = useState<{categoryId: string; index: number} | null>(null);
   const [tempData, setTempData] = useState<any>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    // ตรวจสอบการล็อกอิน
-    const isAdmin = localStorage.getItem('sosth_admin');
-    if (!isAdmin) {
-      router.push('/admin');
-      return;
+    setIsClient(true);
+    // ตรวจสอบการล็อกอินเมื่ออยู่บน client-side แล้ว
+    if (typeof window !== 'undefined') {
+      const isAdmin = localStorage.getItem('sosth_admin');
+      if (!isAdmin) {
+        router.push('/admin');
+        return;
+      }
+      // โหลดข้อมูล
+      fetchData();
     }
-
-    // โหลดข้อมูล
-    fetchData();
   }, [router]);
 
   const fetchData = async () => {
@@ -59,8 +62,10 @@ export default function AdminDashboardPage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('sosth_admin');
-    router.push('/admin');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('sosth_admin');
+      router.push('/admin');
+    }
   };
 
   const handleSaveData = async (newData: any) => {
@@ -175,6 +180,19 @@ export default function AdminDashboardPage() {
       handleEditItem(categoryId, newCategories[categoryIndex].items.length - 1);
     }
   };
+
+  // ไม่แสดง dashboard จนกว่าจะอยู่บน client-side
+  if (!isClient) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 container mx-auto px-4 py-6">
+          <div className="text-center">กำลังโหลด...</div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

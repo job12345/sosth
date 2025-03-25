@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -9,18 +9,38 @@ import { FiLock } from 'react-icons/fi';
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'masterjob') {
-      // เก็บสถานะการล็อกอินไว้ใน localStorage
-      localStorage.setItem('sosth_admin', 'true');
-      router.push('/admin/dashboard');
+      // เก็บสถานะการล็อกอินไว้ใน localStorage เฉพาะเมื่ออยู่บน client
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('sosth_admin', 'true');
+        router.push('/admin/dashboard');
+      }
     } else {
       setError('รหัสผ่านไม่ถูกต้อง');
     }
   };
+
+  // ไม่แสดง form จนกว่าจะอยู่บน client-side
+  if (!isClient) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 container mx-auto px-4 py-6">
+          <div className="text-center">กำลังโหลด...</div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
