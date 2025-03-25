@@ -66,14 +66,16 @@ export default function AdminDashboardPage() {
   const handleSaveData = async (newData: any) => {
     setIsSaving(true);
     try {
-      const token = localStorage.getItem('sosth_admin');
+      // ส่ง categories array พร้อมกับ token
       const response = await fetch('/api/phones', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'x-admin-auth': token || 'masterjob'
+          'x-admin-auth': 'masterjob'
         },
-        body: JSON.stringify(newData)
+        body: JSON.stringify({
+          categories: newData
+        })
       });
 
       if (!response.ok) {

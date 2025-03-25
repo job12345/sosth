@@ -7,7 +7,7 @@ const DATA_FILE_PATH = path.join(process.cwd(), 'public/data/phones.json');
 // ตรวจสอบว่าเป็น admin หรือไม่
 async function isAdmin(req: NextRequest) {
   const authToken = req.headers.get('x-admin-auth');
-  return authToken === process.env.ADMIN_TOKEN || authToken === 'masterjob';
+  return authToken === 'masterjob';
 }
 
 // อ่านข้อมูลจากไฟล์
@@ -24,19 +24,9 @@ async function readData() {
 // บันทึกข้อมูลลงไฟล์
 async function writeData(data: any) {
   try {
-    // ตรวจสอบโครงสร้างข้อมูล
-    if (!Array.isArray(data)) {
-      throw new Error('ข้อมูลต้องอยู่ในรูปแบบ array');
-    }
-    
-    // สร้างข้อมูลในรูปแบบที่ถูกต้อง
-    const formattedData = {
-      categories: data
-    };
-    
     await fs.writeFile(
       DATA_FILE_PATH, 
-      JSON.stringify(formattedData, null, 2),
+      JSON.stringify(data, null, 2),
       'utf-8'
     );
   } catch (error) {
@@ -64,6 +54,7 @@ export async function PUT(req: NextRequest) {
   try {
     // ตรวจสอบสิทธิ์
     if (!await isAdmin(req)) {
+      console.error('Authentication failed');
       return NextResponse.json(
         { error: 'ไม่มีสิทธิ์เข้าถึง' },
         { status: 403 }
@@ -72,7 +63,9 @@ export async function PUT(req: NextRequest) {
 
     // รับและตรวจสอบข้อมูล
     const body = await req.json();
-    if (!body || !Array.isArray(body)) {
+    
+    if (!body || !body.categories) {
+      console.error('Invalid data format received:', body);
       return NextResponse.json(
         { error: 'ข้อมูลไม่ถูกต้อง' },
         { status: 400 }
