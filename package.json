@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.4.0",
+    "@cloudflare/next-on-pages": "^1.13.10",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.8.4",
     "js-cookie": "^3.0.5",
