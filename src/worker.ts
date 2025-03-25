@@ -1,15 +1,21 @@
-import { createEventHandler } from '@cloudflare/next-on-pages';
+export default {
+  async fetch(request: Request, env: any, ctx: any) {
+    try {
+      const url = new URL(request.url);
+      
+      // Serve static assets from bucket
+      if (url.pathname.startsWith('/static/')) {
+        const asset = await env.ASSETS.fetch(request);
+        if (asset.status === 200) {
+          return asset;
+        }
+      }
 
-export const onRequest = createEventHandler({
-  // Example configuration
-  bypassToken: process.env.BYPASS_TOKEN,
-  
-  // Optional: Configure caching
-  cache: {
-    // Enable caching for successful responses
-    browser: {
-      name: 'cache-control',
-      values: ['public', 'max-age=3600']
+      // Forward to Next.js
+      const response = await env.NEXT_APP.fetch(request);
+      return response;
+    } catch (e) {
+      return new Response('Internal Server Error', { status: 500 });
     }
-  }
-});
+  },
+};
